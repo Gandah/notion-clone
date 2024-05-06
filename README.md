@@ -7,8 +7,8 @@
   - [Overview](#overview)
   - [💾Core Features](#core-features)
     - [📸Screenshots](#screenshots)
-      - [📱Mobile](#mobile)
       - [🖥️Desktop](#️desktop)
+      - [📱Mobile](#mobile)
     - [🔗Links](#links)
     - [⚙️Built with](#️built-with)
     - [👨‍💻Continued development](#continued-development)
@@ -16,7 +16,7 @@
 
 ## Overview
 
-A notion clone
+A notion clone app on steriods
 
 ## 💾Core Features
 
@@ -46,11 +46,14 @@ A notion clone
   
 ### 📸Screenshots
 
-#### 📱Mobile
-
-
 #### 🖥️Desktop
+![Desktop](./screenshots/homepage.png)
+![Desktop](./screenshots/login.png)
+![Desktop](./screenshots/workspace.png)
+![Desktop](./screenshots/settings.png)
 
+
+#### 📱Mobile
 
 ### 🔗Links
 
@@ -74,10 +77,9 @@ A notion clone
 
 ### 👨‍💻Continued development
 
-- Add replies and requests feature
+- TBA
 
 ## Author
 
 - LinkedIn - [MyLinkedIn](https://www.linkedin.com/in/gandahkelvin)
 - Website - [Portfolio](https://gandah-porfolio.vercel.app/)
-- Twitter - [@mr_g4nderson](https://twitter.com/mr_g4nderson?t=A5NobjZab2sVEdh3Zq9s0A&s=09)
