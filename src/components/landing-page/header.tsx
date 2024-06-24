@@ -91,19 +91,19 @@ const Header = () => {
                                     href="#"
                                     title="Introduction"
                                     >
-                                    Re-usable components built using Radix UI and Tailwind CSS.
+                                    Templates and Starter Pages
                                 </ListItem>
                                 <ListItem
                                     href="#"
-                                    title="Installation"
+                                    title="Community"
                                 >
-                                    How to install dependencies and structure your app.
+                                    Community and Collaboration Tools
                                 </ListItem>
                                 <ListItem
                                     href="#"
-                                    title="Typography"
+                                    title="Help"
                                     >
-                                    Styles for headings, paragraphs, lists...etc
+                                    Help and Support Resources
                                 </ListItem>
                             </ul>
                     </NavigationMenuContent>
@@ -124,13 +124,13 @@ const Header = () => {
                     <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4  md:grid-row-2  ">
                         <ListItem
-                        title="Pro Plan"
+                        title='Pro Plan'
                         href={'#'}
                         >
                         Unlock full power with collaboration.
                         </ListItem>
                         <ListItem
-                        title={'free Plan'}
+                        title='Free Plan'
                         href={'#'}
                         >
                         Great for teams just starting out.

@@ -67,7 +67,7 @@ A notion clone app on steriods
 - Shadcn UI
 - TailwindCSS
 - Drizzle ORM
-- Lucid react
+- Lucide react
 - React Hook Form
 - Socket.io
 - Stripe

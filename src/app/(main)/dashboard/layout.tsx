@@ -11,9 +11,6 @@ const WorkspaceLayout = async ({ children, params }: LayoutProps) => {
   const { data: products, error } = await  getActiveProductsWithPrice();
 
   if(error) throw new Error();
-
-
-
   return (
     <main className="flex over-hidden h-screen">
       <SubscriptionModalProvider products={products}>

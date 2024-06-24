@@ -167,8 +167,26 @@ const SettingsForm = () => {
   };
 
   //CHALLENGE fetching avatar details
-  const onChangeProfilePicture = () => {
+  const onChangeProfilePicture = async (e:
+     React.ChangeEvent<HTMLInputElement>
+    ) => {
+      // if(!workspaceId) return;
+      // const avatarImg = e.target.files?.[0]
+      // console.log("iMAG: ",avatarImg)
+      // if(!avatarImg) return;
+
+      // const uuid = v4();
+
+      // const { data, error} = await supabase.storage
+      // .from('avatars')
+      // .upload(`avatar-img.${uuid}`, avatarImg, {
+      //   cacheControl: '3600',
+      //   upsert: true,
+      // } )
+      // setUploadingProfilePic(true);
+
     console.log('Logic not implemented')
+   
   };
 
 

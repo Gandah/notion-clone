@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import './globals.css'
-import db from '@/lib/supabase/db'
+// import db from '@/lib/supabase/db'
 import { twMerge } from 'tailwind-merge'
 import Providers from '@/lib/providers'
 import { Toaster } from '@/components/ui/toaster'

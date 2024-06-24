@@ -55,7 +55,6 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, [state, listType, workspaceId, id, title]);
 
   //fileItitle
-
   const fileTitle: string | undefined = useMemo(() => {
     if (listType === 'file') {
       const fileAndFolderId = id.split('folder');
@@ -86,8 +85,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
-  //blur
 
+  //blur
   const handleBlur = async () => {
     if (!isEditing) return;
     setIsEditing(false);
@@ -130,6 +129,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           folder: { iconId: selectedEmoji },
         },
       });
+
       const { data, error } = await updateFolder({ iconId: selectedEmoji }, id);
       if (error) {
         toast({
@@ -145,6 +145,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       }
     }
   };
+
   const folderTitleChange = (e: any) => {
     if (!workspaceId) return;
     const fid = id.split('folder');
@@ -317,10 +318,10 @@ const Dropdown: React.FC<DropdownProps> = ({
         <div className={groupIdentifies}>
           <div
             className="flex 
-          gap-4 
-          items-center 
-          justify-center 
-          overflow-hidden"
+                      gap-4 
+                      items-center 
+                      justify-center 
+                      overflow-hidden"
           >
             <div className="relative">
               <EmojiPicker getValue={onChangeEmoji}>{iconId}</EmojiPicker>

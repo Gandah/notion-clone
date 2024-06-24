@@ -39,10 +39,10 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ children }) => {
       >
         <ul
           className="flex 
-        justify-between 
-        items-center 
-        p-4"
-        >
+            justify-between 
+            items-center 
+            p-4"
+            >
           {nativeNavigations.map((item) => (
             <li
               className="flex
