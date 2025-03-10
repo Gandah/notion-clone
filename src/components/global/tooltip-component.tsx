@@ -18,7 +18,10 @@ const TooltipComponent: React.FC<TooltipComponentProps> = ({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>{children}</TooltipTrigger>
-        <TooltipContent>{message}</TooltipContent>
+        <TooltipContent
+        >
+          {message}
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

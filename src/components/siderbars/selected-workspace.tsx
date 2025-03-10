@@ -24,7 +24,7 @@ const SelectedWorkspace: React.FC<SelectedWorkspaceProps> = ({
         
       setWorkspaceLogo(path);
     }
-  }, [workspace]);
+  }, [workspace, workspaceLogo]);
 
 
   return (
@@ -40,7 +40,7 @@ const SelectedWorkspace: React.FC<SelectedWorkspaceProps> = ({
       flex-row 
       p-2 
       gap-4 
-      justify-center 
+      justify-start 
       cursor-pointer 
       items-center 
       my-2"
@@ -55,7 +55,8 @@ const SelectedWorkspace: React.FC<SelectedWorkspaceProps> = ({
       <div className="flex flex-col">
         <p
           className="text-lg 
-        w-[170px] 
+        min-w-[170px] 
+        w-fit
         overflow-hidden 
         overflow-ellipsis 
         whitespace-nowrap"

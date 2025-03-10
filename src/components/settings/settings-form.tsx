@@ -1,11 +1,11 @@
-'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import { useToast } from '../ui/use-toast';
-import { useAppState } from '@/lib/providers/state-provider';
-import { User, workspace } from '@/lib/supabase/supabase.types';
-import { useSupabaseUser } from '@/lib/providers/supabase-user-provider';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { useToast } from "../ui/use-toast";
+import { useAppState } from "@/lib/providers/state-provider";
+import { User, workspace } from "@/lib/supabase/supabase.types";
+import { useSupabaseUser } from "@/lib/providers/supabase-user-provider";
+import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {
   Briefcase,
   CreditCard,
@@ -15,18 +15,18 @@ import {
   Plus,
   Share,
   User as UserIcon,
-} from 'lucide-react';
-import { Separator } from '../ui/separator';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
+} from "lucide-react";
+import { Separator } from "../ui/separator";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import {
   addCollaborators,
   deleteWorkspace,
   getCollaborators,
   removeCollaborators,
   updateWorkspace,
-} from '@/lib/supabase/queries';
-import { v4 } from 'uuid';
+} from "@/lib/supabase/queries";
+import { v4 } from "uuid";
 import {
   Select,
   SelectContent,
@@ -34,7 +34,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,18 +45,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 
-import CollaboratorSearch from '../global/collaborator-search';
-import { Button } from '../ui/button';
-import { ScrollArea } from '../ui/scroll-area';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Alert, AlertDescription } from '../ui/alert';
-import CypressProfileIcon from '../icons/cypressProfileIcon';
-import LogoutButton from '../global/logout-button';
-import Link from 'next/link';
-import { useSubscriptionModal } from '@/lib/providers/subscription-modal-provider';
-import { postData } from '@/lib/utils';
+import CollaboratorSearch from "../global/collaborator-search";
+import { Button } from "../ui/button";
+import { ScrollArea } from "../ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Alert, AlertDescription } from "../ui/alert";
+import CypressProfileIcon from "../icons/cypressProfileIcon";
+import LogoutButton from "../global/logout-button";
+import Link from "next/link";
+import { useSubscriptionModal } from "@/lib/providers/subscription-modal-provider";
+import { postData } from "@/lib/utils";
 
 const SettingsForm = () => {
   const { toast } = useToast();
@@ -65,7 +65,7 @@ const SettingsForm = () => {
   const router = useRouter();
   const supabase = createClientComponentClient();
   const { state, workspaceId, dispatch } = useAppState();
-  const [permissions, setPermissions] = useState('private');
+  const [permissions, setPermissions] = useState("private");
   const [collaborators, setCollaborators] = useState<User[] | []>([]);
   const [openAlertMessage, setOpenAlertMessage] = useState(false);
   const [workspaceDetails, setWorkspaceDetails] = useState<workspace>();
@@ -80,11 +80,12 @@ const SettingsForm = () => {
     setLoadingPortal(true);
     try {
       const { url, error } = await postData({
-        url: '/api/create-portal-link',
+        url: "/api/create-portal-link",
       });
       window.location.assign(url);
     } catch (error) {
-      console.log(error);
+      toast({ title: "Redirect to portal failed" });
+      console.error(error);
       setLoadingPortal(false);
     }
     setLoadingPortal(false);
@@ -92,7 +93,7 @@ const SettingsForm = () => {
   //addcollborators
   const addCollaborator = async (profile: User) => {
     if (!workspaceId) return;
-    if (subscription?.status !== 'active' && collaborators.length >= 2) {
+    if (subscription?.status !== "active" && collaborators.length >= 2) {
       setOpen(true);
       return;
     }
@@ -104,7 +105,7 @@ const SettingsForm = () => {
   const removeCollaborator = async (user: User) => {
     if (!workspaceId) return;
     if (collaborators.length === 1) {
-      setPermissions('private');
+      setPermissions("private");
     }
     await removeCollaborators([user], workspaceId);
     setCollaborators(
@@ -117,7 +118,7 @@ const SettingsForm = () => {
   const workspaceNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!workspaceId || !e.target.value) return;
     dispatch({
-      type: 'UPDATE_WORKSPACE',
+      type: "UPDATE_WORKSPACE",
       payload: { workspace: { title: e.target.value }, workspaceId },
     });
     if (titleTimerRef.current) clearTimeout(titleTimerRef.current);
@@ -135,20 +136,24 @@ const SettingsForm = () => {
     const uuid = v4();
     setUploadingLogo(true);
     const { data, error } = await supabase.storage
-      .from('workspace-logos')
+      .from("workspace-logos")
       .upload(`workspaceLogo.${uuid}`, file, {
-        cacheControl: '3600',
+        cacheControl: "3600",
         upsert: true,
       });
 
-    if (!error) {
+    try {
       dispatch({
-        type: 'UPDATE_WORKSPACE',
-        payload: { workspace: { logo: data.path }, workspaceId },
+        type: "UPDATE_WORKSPACE",
+        payload: { workspace: { logo: data?.path }, workspaceId },
       });
-      await updateWorkspace({ logo: data.path }, workspaceId);
+      await updateWorkspace({ logo: data?.path }, workspaceId);
       setUploadingLogo(false);
+    } catch (error) {
+      console.error("Failed to upload logo", error);
+      toast({ title: "Failed to upload logo" });
     }
+
   };
 
   const onClickAlertConfirm = async () => {
@@ -156,39 +161,37 @@ const SettingsForm = () => {
     if (collaborators.length > 0) {
       await removeCollaborators(collaborators, workspaceId);
     }
-    setPermissions('private');
+    setPermissions("private");
     setOpenAlertMessage(false);
   };
 
   const onPermissionsChange = (val: string) => {
-    if (val === 'private') {
+    if (val === "private") {
       setOpenAlertMessage(true);
     } else setPermissions(val);
   };
 
   //CHALLENGE fetching avatar details
-  const onChangeProfilePicture = async (e:
-     React.ChangeEvent<HTMLInputElement>
-    ) => {
-      // if(!workspaceId) return;
-      // const avatarImg = e.target.files?.[0]
-      // console.log("iMAG: ",avatarImg)
-      // if(!avatarImg) return;
+  const onChangeProfilePicture = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // if(!workspaceId) return;
+    // const avatarImg = e.target.files?.[0]
+    // console.log("iMAG: ",avatarImg)
+    // if(!avatarImg) return;
 
-      // const uuid = v4();
+    // const uuid = v4();
 
-      // const { data, error} = await supabase.storage
-      // .from('avatars')
-      // .upload(`avatar-img.${uuid}`, avatarImg, {
-      //   cacheControl: '3600',
-      //   upsert: true,
-      // } )
-      // setUploadingProfilePic(true);
+    // const { data, error} = await supabase.storage
+    // .from('avatars')
+    // .upload(`avatar-img.${uuid}`, avatarImg, {
+    //   cacheControl: '3600',
+    //   upsert: true,
+    // } )
+    // setUploadingProfilePic(true);
 
-    console.log('Logic not implemented')
-   
+    console.log("Logic not implemented");
   };
-
 
   //WIP Payment Portal redirect
 
@@ -204,7 +207,7 @@ const SettingsForm = () => {
     const fetchCollaborators = async () => {
       const response = await getCollaborators(workspaceId);
       if (response.length) {
-        setPermissions('shared');
+        setPermissions("shared");
         setCollaborators(response);
       }
     };
@@ -227,7 +230,7 @@ const SettingsForm = () => {
         </Label>
         <Input
           name="workspaceName"
-          value={workspaceDetails ? workspaceDetails.title : ''}
+          value={workspaceDetails ? workspaceDetails.title : ""}
           placeholder="Workspace Name"
           onChange={workspaceNameChange}
         />
@@ -243,9 +246,9 @@ const SettingsForm = () => {
           accept="image/*"
           placeholder="Workspace Logo"
           onChange={onChangeWorkspaceLogo}
-          disabled={uploadingLogo || subscription?.status !== 'active'}
+          disabled={uploadingLogo || subscription?.status !== "active"}
         />
-        {subscription?.status !== 'active' && (
+        {subscription?.status !== "active" && (
           <small className="text-muted-foreground">
             To customize your workspace, you need to be on a Pro Plan
           </small>
@@ -253,10 +256,7 @@ const SettingsForm = () => {
       </div>
       <>
         <Label htmlFor="permissions">Permissions</Label>
-        <Select
-          onValueChange={onPermissionsChange}
-          value={permissions}
-        >
+        <Select onValueChange={onPermissionsChange} value={permissions}>
           <SelectTrigger className="w-full h-26 -mt-3">
             <SelectValue />
           </SelectTrigger>
@@ -294,7 +294,7 @@ const SettingsForm = () => {
           </SelectContent>
         </Select>
 
-        {permissions === 'shared' && (
+        {permissions === "shared" && (
           <div>
             <CollaboratorSearch
               existingCollaborators={collaborators}
@@ -302,17 +302,14 @@ const SettingsForm = () => {
                 addCollaborator(user);
               }}
             >
-              <Button
-                type="button"
-                className="text-sm mt-4"
-              >
+              <Button type="button" className="text-sm mt-4">
                 <Plus />
                 Add Collaborators
               </Button>
             </CollaboratorSearch>
             <div className="mt-4">
               <span className="text-sm text-muted-foreground">
-                Collaborators {collaborators.length || ''}
+                Collaborators {collaborators.length || ""}
               </span>
               <ScrollArea
                 className="
@@ -378,15 +375,15 @@ const SettingsForm = () => {
             </div>
           </div>
         )}
-        <Alert variant={'destructive'}>
+        <Alert variant={"destructive"}>
           <AlertDescription>
             Warning! deleting you workspace will permanantly delete all data
             related to this workspace.
           </AlertDescription>
           <Button
             type="submit"
-            size={'sm'}
-            variant={'destructive'}
+            size={"sm"}
+            variant={"destructive"}
             className="mt-4 
             text-sm
             bg-destructive/40 
@@ -395,9 +392,9 @@ const SettingsForm = () => {
             onClick={async () => {
               if (!workspaceId) return;
               await deleteWorkspace(workspaceId);
-              toast({ title: 'Successfully deleted your workspae' });
-              dispatch({ type: 'DELETE_WORKSPACE', payload: workspaceId });
-              router.replace('/dashboard');
+              toast({ title: "Successfully deleted your workspae" });
+              dispatch({ type: "DELETE_WORKSPACE", payload: workspaceId });
+              router.replace("/dashboard");
             }}
           >
             Delete Workspace
@@ -409,14 +406,14 @@ const SettingsForm = () => {
         <Separator />
         <div className="flex items-center">
           <Avatar>
-            <AvatarImage src={''} />
+            <AvatarImage src={""} />
             <AvatarFallback>
               <CypressProfileIcon />
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col ml-6">
             <small className="text-muted-foreground cursor-not-allowed">
-              {user ? user.email : ''}
+              {user ? user.email : ""}
             </small>
             <Label
               htmlFor="profilePicture"
@@ -446,8 +443,8 @@ const SettingsForm = () => {
         </p>
         <Separator />
         <p className="text-muted-foreground">
-          You are currently on a{' '}
-          {subscription?.status === 'active' ? 'Pro' : 'Free'} Plan
+          You are currently on a{" "}
+          {subscription?.status === "active" ? "Pro" : "Free"} Plan
         </p>
         <Link
           href="/"
@@ -456,12 +453,12 @@ const SettingsForm = () => {
         >
           View Plans <ExternalLink size={16} />
         </Link>
-        {subscription?.status === 'active' ? (
+        {subscription?.status === "active" ? (
           <div>
             <Button
               type="button"
               size="sm"
-              variant={'secondary'}
+              variant={"secondary"}
               disabled={loadingPortal}
               className="text-sm"
               onClick={redirectToCustomerPortal}
@@ -474,7 +471,7 @@ const SettingsForm = () => {
             <Button
               type="button"
               size="sm"
-              variant={'secondary'}
+              variant={"secondary"}
               className="text-sm"
               onClick={() => setOpen(true)}
             >
