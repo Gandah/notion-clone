@@ -50,7 +50,8 @@ const SelectedWorkspace: React.FC<SelectedWorkspaceProps> = ({
         alt="workspace logo"
         width={26}
         height={26}
-        objectFit="cover"
+        className="object-cover"
+        // objectFit="cover"
       />
       <div className="flex flex-col">
         <p

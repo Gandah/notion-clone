@@ -52,8 +52,11 @@ A notion clone app on steriods
 ![Desktop](./screenshots/workspace.png)
 ![Desktop](./screenshots/settings.png)
 
+[![Real time Collaaboration](./screenshots/realtime.png)](https://res.cloudinary.com/ddlcqj0ks/video/upload/v1741946140/notion-clone_f6zdvq.mp4)
+
 
 #### 📱Mobile
+![Mobile](./screenshots/mobile.png)
 
 ### 🔗Links
 
@@ -76,8 +79,8 @@ A notion clone app on steriods
 - TypeScript
 
 ### 👨‍💻Continued development
-
-- TBA
+ - fix Subscription
+ - fix cursors 
 
 ## Author
 

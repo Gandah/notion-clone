@@ -326,7 +326,7 @@ const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) => {
     const fetchFiles = async () => {
       const { error: filesError, data } = await getFiles(folderId);
       if (filesError) {
-        console.log(filesError);
+        console.error(filesError);
       }
       if (!data) return;
       dispatch({
@@ -338,7 +338,7 @@ const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) => {
   }, [folderId, workspaceId]);
 
   useEffect(() => {
-    console.log('App State Changed', state);
+    // console.log('App State Changed', state);
   }, [state]);
 
   return (

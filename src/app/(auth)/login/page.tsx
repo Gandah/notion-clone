@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -38,6 +38,11 @@ const LoginPage = () => {
     
     const isLoading = form.formState.isSubmitting;
 
+    useEffect(() => {
+      if (submitError) setSubmitError('');
+    }, [form.watch("email"), form.watch("password")]); 
+    
+
     const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (
         formData
     ) => {
@@ -54,9 +59,12 @@ const LoginPage = () => {
   return (
     <Form {...form}>
         <form 
-            onChange={() => {
-            if (submitError) setSubmitError('');
-          }}
+            // onInput={() => {
+            //   if (submitError) setSubmitError('');
+            // }}
+          //   onChange={() => {
+          //   if (submitError) setSubmitError('');
+          // }}
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full sm:justify-center sm:w-[400px] space-y-6 flex flex-col"
         >

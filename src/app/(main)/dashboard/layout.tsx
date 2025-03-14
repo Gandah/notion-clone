@@ -10,7 +10,10 @@ type LayoutProps = PropsWithChildren & {
 const WorkspaceLayout = async ({ children, params }: LayoutProps) => {
   const { data: products, error } = await  getActiveProductsWithPrice();
 
-  if(error) throw new Error();
+  if (error) {
+    console.error('Product fetching error:', error);
+    throw new Error(`Failed to fetch active products with prices: ${error || 'Unknown error'}`, { cause: error });
+  }
   return (
     <main className="flex over-hidden h-screen">
       <SubscriptionModalProvider products={products}>
