@@ -156,58 +156,22 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
   }, [state, pathname, workspaceId]);
 
   
-  // const initializeQuill  = useCallback(async (wrapper: HTMLDivElement | null) => {
-  //   if (!wrapper) return;
+  const initializeQuill  = useCallback(async (wrapper: HTMLDivElement | null) => {
+    if (!wrapper) return;
 
-  //   if (typeof window !== 'undefined') {
-  //     if (wrapper === null) return;
-  //     wrapper.innerHTML = '';
-  //     const editor = document.createElement('div');
-  //     wrapper.append(editor);
-  //     const Quill = (await import('quill')).default;
-  //     const QuillCursors = (await import('quill-cursors')).default;
-  //     Quill.register('modules/cursors', QuillCursors);
+    if (typeof window !== 'undefined') {
+      if (wrapper === null) return;
+      wrapper.innerHTML = '';
+      const editor = document.createElement('div');
+      wrapper.append(editor);
+      const Quill = (await import('quill')).default;
+      const QuillCursors = (await import('quill-cursors')).default;
+      Quill.register('modules/cursors', QuillCursors);
      
-  //     try {   
-  //       if(!Quill) return;
+      try {   
+        if(!Quill) return;
 
-  //       const q = new Quill(editor, {
-  //         theme: 'snow',
-  //         modules: {
-  //           toolbar: TOOLBAR_OPTIONS,
-  //           cursors: {
-  //             transformOnTextChange: true,
-  //           },
-  //         },
-  //       });
-  //       setQuill(q);
-  //     } catch (error) {
-  //       console.error("Error initializing Quill:", error);
-  //     }
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   initializeQuill(wrapperRef?.current);
-  // }, [initializeQuill]);
-
-  useEffect(() => {
-    const wrapper = wrapperRef.current;
-    if (!wrapper || typeof window === 'undefined') return;
-    
-    wrapper.innerHTML = '';
-    const editor = document.createElement('div');
-    wrapper.appendChild(editor);
-    
-    let quillInstance: any = null;
-    
-    const initQuill = async () => {
-      try {
-        const Quill = (await import('quill')).default;
-        const QuillCursors = (await import('quill-cursors')).default;
-        Quill.register('modules/cursors', QuillCursors);
-        
-        quillInstance = new Quill(editor, {
+        const q = new Quill(editor, {
           theme: 'snow',
           modules: {
             toolbar: TOOLBAR_OPTIONS,
@@ -216,23 +180,59 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
             },
           },
         });
-        
-        setQuill(quillInstance);
+        setQuill(q);
       } catch (error) {
         console.error("Error initializing Quill:", error);
       }
-    };
-    
-    initQuill();
-    
-    // Cleanup function
-    return () => {
-      if (quillInstance && quillInstance.destroy) {
-        quillInstance.destroy();
-      }
-    };
+    }
   }, []);
-  
+
+  useEffect(() => {
+    initializeQuill(wrapperRef?.current);
+  }, [initializeQuill]);
+
+  // useEffect(() => {
+  //   const wrapper = wrapperRef.current;
+  //   if (!wrapper || typeof window === 'undefined') return;
+    
+  //   wrapper.innerHTML = '';
+  //   const editor = document.createElement('div');
+  //   wrapper.appendChild(editor);
+    
+  //   let quillInstance: any = null;
+    
+  //   const initQuill = async () => {
+  //     try {
+  //       const Quill = (await import('quill')).default;
+  //       const QuillCursors = (await import('quill-cursors')).default;
+  //       Quill.register('modules/cursors', QuillCursors);
+        
+  //       quillInstance = new Quill(editor, {
+  //         theme: 'snow',
+  //         modules: {
+  //           toolbar: TOOLBAR_OPTIONS,
+  //           cursors: {
+  //             transformOnTextChange: true,
+  //           },
+  //         },
+  //       });
+        
+  //       setQuill(quillInstance);
+  //     } catch (error) {
+  //       console.error("Error initializing Quill:", error);
+  //     }
+  //   };
+    
+  //   initQuill();
+    
+  //   // Cleanup function
+  //   return () => {
+  //     if (quillInstance && quillInstance.destroy) {
+  //       quillInstance.destroy();
+  //     }
+  //   };
+  // }, []);
+
   const restoreFileHandler = async () => {
     if (dirType === 'file') {
       if (!folderId || !workspaceId) return;

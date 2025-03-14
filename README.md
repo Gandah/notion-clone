@@ -52,7 +52,7 @@ A notion clone app on steriods
 ![Desktop](./screenshots/workspace.png)
 ![Desktop](./screenshots/settings.png)
 
-[![Real time Collaaboration](./screenshots/realtime.png)](https://res.cloudinary.com/ddlcqj0ks/video/upload/v1741946140/notion-clone_f6zdvq.mp4)
+[![Real time Collaaboration](./screenshots/realtime.png)](https://res.cloudinary.com/ddlcqj0ks/video/upload/v1741965987/notion-clone_mwq8pp.mp4)
 
 
 #### 📱Mobile
@@ -61,7 +61,7 @@ A notion clone app on steriods
 ### 🔗Links
 
 - GitHub Repo: [View Repo](https://github.com/Gandah/notion-clone.git)
-- Live Site URL: [Visit Site]()
+- Live Site URL: [Visit Site](https://co-notes.netlify.app/)
 
 ### ⚙️Built with
 
